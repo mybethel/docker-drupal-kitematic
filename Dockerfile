@@ -17,10 +17,9 @@ RUN pecl install uploadprogress \
   && echo "extension=uploadprogress.so" > /usr/local/etc/php/php.ini
 
 # Install Drush using Composer.
-RUN curl -sS https://getcomposer.org/installer | php \
-  && mv composer.phar /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer global require drush/drush:~7.0.0@rc
-RUN ln -sf $COMPOSER_HOME/vendor/bin/drush.php /usr/local/bin/drush
+RUN ln -sf $HOME/.composer/vendor/bin/drush /usr/local/bin/drush
 RUN drush --version
 
 # https://www.drupal.org/drupal-7.38-release-notes
