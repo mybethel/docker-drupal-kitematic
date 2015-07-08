@@ -28,7 +28,8 @@ RUN usermod -u 1000 www-data
 RUN usermod -G staff www-data
 
 # Increase PHP Memory Limit from 128 to 512
-RUN sed -i "s/memory_limit = 128M/memory_limit = 512M/" $PHP_INI_DIR/php.ini
+RUN sed -i "s/memory_limit = 128M/memory_limit = 512M/" /usr/src/php/php.ini-development
+RUN sed -i "s/memory_limit = 128M/memory_limit = 512M/" /usr/src/php/php.ini-production
 
 # https://www.drupal.org/drupal-7.38-release-notes
 ENV DRUPAL_VERSION 7.38
