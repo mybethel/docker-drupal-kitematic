@@ -27,6 +27,9 @@ RUN drush --version
 RUN usermod -u 1000 www-data
 RUN usermod -G staff www-data
 
+# Increase PHP Memory Limit from 128 to 512
+RUN sed -i "s/memory_limit = 128M/memory_limit = 512M/" /etc/php5/cli/php.ini
+
 # https://www.drupal.org/drupal-7.38-release-notes
 ENV DRUPAL_VERSION 7.38
 ENV DRUPAL_MD5 c18298c1a5aed32ddbdac605fdef7fce
