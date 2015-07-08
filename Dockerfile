@@ -28,7 +28,7 @@ RUN usermod -u 1000 www-data
 RUN usermod -G staff www-data
 
 # Adding custom php settings.
-COPY config/php.ini /usr/local/etc/php
+COPY php.ini /usr/local/etc/php/php.ini
 
 # https://www.drupal.org/drupal-7.38-release-notes
 ENV DRUPAL_VERSION 7.38
