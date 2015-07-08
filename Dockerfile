@@ -22,6 +22,9 @@ RUN composer global require drush/drush:~7.0.0@rc
 RUN ln -sf $HOME/.composer/vendor/bin/drush /usr/local/bin/drush
 RUN drush --version
 
+# Set user 1000 to www-data, enables write permission.
+RUN usermod -u 1000 www-data
+
 # https://www.drupal.org/drupal-7.38-release-notes
 ENV DRUPAL_VERSION 7.38
 ENV DRUPAL_MD5 c18298c1a5aed32ddbdac605fdef7fce
