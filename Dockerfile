@@ -28,7 +28,11 @@ RUN usermod -u 1000 www-data
 RUN usermod -G staff www-data
 
 # Adding custom php settings.
-COPY php.ini /usr/local/etc/php/php.ini
+COPY php.ini /usr/local/etc/php/conf.d/php.ini
+
+# Adding APCU for faster php
+RUN pecl install apcu-beta \
+    && echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini
 
 # https://www.drupal.org/drupal-7.38-release-notes
 ENV DRUPAL_VERSION 7.38
