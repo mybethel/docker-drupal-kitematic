@@ -14,7 +14,7 @@ VOLUME  ["/var/www/html"]
 
 # Install uploadprogress extension.
 RUN pecl install uploadprogress \
-  && echo "extension=uploadprogress.so" > /usr/local/etc/php/php.ini
+  && echo "extension=uploadprogress.so" >> /usr/local/etc/php/php.ini
 
 # Install Drush using Composer.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
