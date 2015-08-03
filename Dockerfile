@@ -14,13 +14,25 @@ VOLUME  ["/var/www/html"]
 
 # Install uploadprogress extension.
 RUN pecl install uploadprogress \
-  && echo "extension=uploadprogress.so" > /usr/local/etc/php/php.ini
+  && echo "extension=uploadprogress.so" >> /usr/local/etc/php/php.ini
 
 # Install Drush using Composer.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer global require drush/drush:~7.0.0@rc
 RUN ln -sf $HOME/.composer/vendor/bin/drush /usr/local/bin/drush
 RUN drush --version
+
+# Set user 1000 and group staff to www-data, enables write permission.
+# https://github.com/boot2docker/boot2docker/issues/581#issuecomment-114804894
+RUN usermod -u 1000 www-data
+RUN usermod -G staff www-data
+
+# Adding custom php settings.
+COPY php.ini /usr/local/etc/php/conf.d/php.ini
+
+# Adding APCU for faster php
+RUN pecl install apcu-beta \
+    && echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini
 
 # https://www.drupal.org/drupal-7.38-release-notes
 ENV DRUPAL_VERSION 7.38
