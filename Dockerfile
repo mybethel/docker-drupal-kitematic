@@ -3,7 +3,7 @@ FROM php:5.5-apache
 RUN a2enmod rewrite
 
 # Install the PHP extensions we need.
-RUN apt-get update && apt-get install -y git libpng12-dev libjpeg-dev libpq-dev \
+RUN apt-get update && apt-get install -y git libpng12-dev libjpeg-dev libpq-dev mariadb-client-core-10.0 \
   && rm -rf /var/lib/apt/lists/* \
   && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
   && docker-php-ext-install gd mbstring pdo_mysql pdo_pgsql
@@ -27,16 +27,16 @@ RUN drush --version
 RUN usermod -u 1000 www-data
 RUN usermod -G staff www-data
 
-# Adding custom php settings.
+# Adding custom PHP settings.
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
 
-# Adding APCU for faster php
+# Adding APCU for faster PHP
 RUN pecl install apcu-beta \
     && echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini
 
-# https://www.drupal.org/drupal-7.38-release-notes
-ENV DRUPAL_VERSION 7.38
-ENV DRUPAL_MD5 c18298c1a5aed32ddbdac605fdef7fce
+# https://www.drupal.org/drupal-7.41-release-notes
+ENV DRUPAL_VERSION 7.41
+ENV DRUPAL_MD5 7636e75e8be213455b4ac7911ce5801f
 
 RUN curl -fSL "http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
   && echo "${DRUPAL_MD5} *drupal.tar.gz" | md5sum -c - \
