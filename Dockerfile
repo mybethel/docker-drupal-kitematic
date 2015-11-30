@@ -13,8 +13,6 @@ RUN apt-get update && apt-get install -y git libpng12-dev libjpeg-dev libpq-dev 
 
 WORKDIR /var/www/html
 
-VOLUME  ["/var/www/html"]
-
 # Install uploadprogress extension.
 RUN pecl install uploadprogress \
   && echo "extension=uploadprogress.so" >> /usr/local/etc/php/php.ini
@@ -39,10 +37,8 @@ RUN pecl install apcu \
 
 # https://www.drupal.org/drupal-7.41-release-notes
 ENV DRUPAL_VERSION 7.41
-ENV DRUPAL_MD5 7636e75e8be213455b4ac7911ce5801f
 
-RUN curl -fSL "http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
-  && echo "${DRUPAL_MD5} *drupal.tar.gz" | md5sum -c - \
-  && tar -xz --strip-components=1 -f drupal.tar.gz \
-  && rm drupal.tar.gz \
-  && chown -R www-data:www-data sites
+RUN drush dl drupal-${DRUPAL_VERSION} -d --destination=".." --drupal-project-rename="$(basename `pwd`)" -y \
+  && chown -R www-data:www-data .
+
+VOLUME  ["/var/www/html"]
