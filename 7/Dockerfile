@@ -37,7 +37,7 @@ RUN pecl install apcu \
 
 # Install Drupal
 ENV DRUPAL_VERSION 7.41
-RUN drush dl drupal-${DRUPAL_VERSION} -d --destination=".." --drupal-project-rename="$(basename `pwd`)" -y \
-  && chown -R www-data:www-data .
+RUN drush dl drupal-${DRUPAL_VERSION} -d --destination=".." --drupal-project-rename="$(basename `pwd`)" -y
+RUN chown -R www-data:www-data .
 
 VOLUME  ["/var/www/html"]
