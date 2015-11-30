@@ -1,0 +1,11 @@
+language: bash
+services: docker
+env:
+- VERSION=8
+- VERSION=edge
+before_script:
+- cd "$VERSION"
+script:
+- docker build -t "drupal-kitematic:$VERSION" .
+after_script:
+- docker images
