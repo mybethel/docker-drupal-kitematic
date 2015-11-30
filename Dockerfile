@@ -1,8 +1,7 @@
-FROM php:5.5-apache
-
-RUN a2enmod rewrite
+FROM php:5.6-apache
 
 # Apache configuration
+RUN a2enmod rewrite
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Install the PHP extensions we need.
@@ -35,9 +34,8 @@ COPY php.ini /usr/local/etc/php/conf.d/php.ini
 RUN pecl install apcu \
     && echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini
 
-# https://www.drupal.org/drupal-7.41-release-notes
+# Install Drupal
 ENV DRUPAL_VERSION 7.41
-
 RUN drush dl drupal-${DRUPAL_VERSION} -d --destination=".." --drupal-project-rename="$(basename `pwd`)" -y \
   && chown -R www-data:www-data .
 
