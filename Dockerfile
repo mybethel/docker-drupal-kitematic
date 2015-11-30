@@ -2,6 +2,9 @@ FROM php:5.5-apache
 
 RUN a2enmod rewrite
 
+# Apache configuration
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Install the PHP extensions we need.
 RUN apt-get update && apt-get install -y git libpng12-dev libjpeg-dev libpq-dev mariadb-client-core-10.0 \
   && rm -rf /var/lib/apt/lists/* \
