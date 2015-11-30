@@ -15,7 +15,8 @@ COPY php.ini /usr/local/etc/php/conf.d/drupal.ini
 
 # Install uploadprogress extension.
 RUN pecl install uploadprogress \
-  && echo "extension=uploadprogress.so" >> /usr/local/etc/php/conf.d/uploadprogress.ini
+  && echo "extension=uploadprogress.so" >> /usr/local/etc/php/conf.d/uploadprogress.ini \
+  && rm -vrf /tmp/pear
 
 # Install Twig C extension.
 ENV TWIG_VERSION 1.22.3

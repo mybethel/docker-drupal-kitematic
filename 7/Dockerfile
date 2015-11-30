@@ -14,7 +14,8 @@ WORKDIR /var/www/html
 
 # Install uploadprogress extension.
 RUN pecl install uploadprogress \
-  && echo "extension=uploadprogress.so" >> /usr/local/etc/php/php.ini
+  && echo "extension=uploadprogress.so" >> /usr/local/etc/php/conf.d/uploadprogress.ini \
+  && rm -vrf /tmp/pear
 
 # Install Drush using Composer.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
