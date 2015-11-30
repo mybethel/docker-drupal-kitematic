@@ -31,7 +31,7 @@ RUN usermod -G staff www-data
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
 
 # Adding APCU for faster PHP
-RUN pecl install apcu-beta \
+RUN pecl install apcu \
     && echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini
 
 # https://www.drupal.org/drupal-7.41-release-notes
